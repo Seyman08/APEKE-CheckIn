@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Worker Check-In</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .fade-in {
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md text-center space-y-6">
+
+    <!-- Logo -->
+    <div>
+      <img src="Assets/output-onlinepngtools.png" alt="Brand Logo"
+         class="mx-auto h-24 w-24 rounded-full border-4 border-[#D4AF37] shadow-lg object-cover" 
+      />
+    </div>
+
+    <!-- Welcome Message -->
+    <div class="fade-in">
+      <h1 class="text-xl font-bold text-yellow-600"><i class="fas fa-hand-sparkles"></i> Welcome back!</h1>
+    </div>
+
+    <!-- Check-in Form -->
+    <div>
+      <h2 class="text-2xl font-semibold text-black mb-4">
+        <i class="fas fa-map-marker-alt text-black"></i> Worker Check-In
+      </h2>
+
+      <form id="checkinForm" class="space-y-4">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+          <input type="text" id="name" required 
+                 class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-xl shadow-sm focus:ring-black focus:border-black" />
+        </div>
+
+        <button type="submit" 
+                class="w-full bg-black hover:bg-gray-900 text-white py-2 rounded-xl shadow-md flex items-center justify-center gap-2">
+          <i class="fas fa-check-circle"></i> Check In
+        </button>
+      </form>
+
+      <p id="status" class="text-sm text-center mt-4 text-gray-600"></p>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="checkin.js"></script>
+</body>
+</html>
