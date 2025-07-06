@@ -1,4 +1,4 @@
-// Replace with your actual Firebase config
+
 const firebaseConfig = {
   apiKey: "AIzaSyBypq3GN0govoVCsg6QCp9diCnITAWn-6M",
   authDomain: "workercheckin-72200.firebaseapp.com",
