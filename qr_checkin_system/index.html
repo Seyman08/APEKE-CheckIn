@@ -6,6 +6,10 @@
   <title>Worker Check-In</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Leaflet Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
   <style>
     .fade-in {
       animation: fadeIn 1.2s ease-in-out forwards;
@@ -52,6 +56,8 @@
 
       <p id="status" class="text-sm text-center mt-4 text-gray-600"></p>
     </div>
+    <div id="map" class="mt-4 rounded-xl" style="height: 250px;"></div>
+
   </div>
 
   <!-- Firebase Scripts -->
