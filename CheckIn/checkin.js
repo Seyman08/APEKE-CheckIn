@@ -1,9 +1,14 @@
+// Make sure EmailJS script is included in index.html:
+// <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+emailjs.init("vKL5vSZ9wTmC991IF");
+
 const form = document.getElementById('checkinForm');
 const status = document.getElementById('status');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  status.textContent = "Checking your location...";
+  status.textContent = "📍 Checking location...";
 
   const name = document.getElementById('name').value.trim();
   const timestamp = new Date();
@@ -13,15 +18,15 @@ form.addEventListener('submit', (e) => {
     return;
   }
 
-  navigator.geolocation.getCurrentPosition((position) => {
+  navigator.geolocation.getCurrentPosition(async (position) => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
     const officeLat = 7.364350976013214;
     const officeLng = 3.8545583911102015;
+
     const distance = Math.sqrt(Math.pow(lat - officeLat, 2) + Math.pow(lng - officeLng, 2));
 
-    // Map setup
     const mapContainer = document.getElementById("map");
     mapContainer.innerHTML = "";
 
@@ -30,10 +35,8 @@ form.addEventListener('submit', (e) => {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    // User marker
     L.marker([lat, lng]).addTo(map).bindPopup("📍 You are here").openPopup();
 
-    // Office marker
     L.marker([officeLat, officeLng], {
       icon: L.icon({
         iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
@@ -46,31 +49,32 @@ form.addEventListener('submit', (e) => {
       return;
     }
 
-    // Step 1: Reverse geocode to get readable location name
-    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
-      .then(res => res.json())
-      .then(data => {
-        const locationName = data.display_name || `[${lat.toFixed(4)}, ${lng.toFixed(4)}]`;
+    // 🔁 Reverse Geocode to get human-readable address
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
+    const data = await response.json();
+    const locationName = data.display_name || "Unknown Location";
 
-        // Step 2: Save all data to Firestore
-        db.collection('checkins').add({
-          name: name,
-          time: timestamp.toISOString(),
-          location: {
-            latitude: lat,
-            longitude: lng
-          },
-          locationName: locationName
-        }).then(() => {
-          status.textContent = `✅ Checked in at ${timestamp.toLocaleTimeString()} from ${locationName}`;
-          form.reset();
-        }).catch((error) => {
-          status.textContent = "Error saving check-in: " + error.message;
-        });
-      })
-      .catch(() => {
-        status.textContent = `✅ Checked in at ${timestamp.toLocaleTimeString()} (location name not found)`;
+    try {
+      // Save check-in to Firebase
+      await db.collection('checkins').add({
+        name,
+        time: timestamp.toISOString(),
+        location: { latitude: lat, longitude: lng },
+        locationName
       });
+
+      // Send email to aunt using EmailJS
+      await emailjs.send("service_6blg2ak", "template_3lu95i9", {
+        name,
+        time: timestamp.toLocaleString(),
+        location: locationName
+      });
+
+      status.textContent = `✅ Checked in at ${timestamp.toLocaleTimeString()} from ${locationName}`;
+      form.reset();
+    } catch (error) {
+      status.textContent = "Error saving check-in: " + error.message;
+    }
 
   }, () => {
     status.textContent = "❌ Location access denied. Please enable it to check in.";
