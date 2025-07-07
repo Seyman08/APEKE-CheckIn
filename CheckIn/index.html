@@ -12,21 +12,40 @@
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
   <style>
-    .fade-in {
-      animation: fadeIn 1.2s ease-in-out forwards;
+    .welcome-card {
+      max-width: 400px;
+      margin: 20px auto;
+      background: #000;
+      border: 2px solid gold;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      color: gold;
+      font-family: 'Segoe UI', sans-serif;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
+
+    .welcome-card span {
+      color: white;
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in-out;
+    }
+
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(10px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center min-h-screen px-4">
   <div class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-md text-center space-y-6">
 
     <!-- Logo -->
     <div>
-      <img src="Assets/output-onlinepngtools.png" alt="Brand Logo"
+      <img src="assets/output-onlinepngtools.png" alt="Brand Logo"
          class="mx-auto h-24 w-24 rounded-full border-4 border-[#D4AF37] shadow-lg object-cover" 
       />
     </div>
