@@ -43,10 +43,10 @@ form.addEventListener('submit', async (e) => {
       })
     }).addTo(map).bindPopup("🏢 Office Location");
 
-    if (distance > 0.001) {
-      status.textContent = "❌ You are not within the allowed check-in area.";
-      return;
-    }
+    // if (distance > 0.001) {
+    //   status.textContent = "❌ You are not within the allowed check-in area.";
+    //   return;
+    // }
 
     // 🔁 Reverse Geocode to get human-readable address
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
