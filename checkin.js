@@ -23,8 +23,8 @@ form.addEventListener('submit', async (e) => {
     const lat = position.coords.latitude;
     const lng = position.coords.longitude;
 
-    const officeLat = 7.364999;
-    const officeLng = 3.854641;
+    const officeLat = 7.36440;
+    const officeLng = 3.85449;
     const distance = Math.sqrt(Math.pow(lat - officeLat, 2) + Math.pow(lng - officeLng, 2));
 
     const mapContainer = document.getElementById("map");
