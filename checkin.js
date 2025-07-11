@@ -45,7 +45,7 @@ form.addEventListener('submit', async (e) => {
     }).addTo(map).bindPopup("🏢 Office Location");
 
     
-    if (distance > 0.0002) {
+    if (distance > 0.00005) {
       status.textContent = "❌ You are not within the allowed check-in area.";
       form.querySelector("button").disabled = false; // 🔓 Re-enable on invalid location
       return;
